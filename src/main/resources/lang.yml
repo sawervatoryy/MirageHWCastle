@@ -1,0 +1,156 @@
+# ═══════════════════════════════════════════════════════════════
+#  MirageHWCastle v0.1 Pre-Release — lang.yml (все сообщения плагина)
+#  MirageStudio | Автор: sawervatoryy | https://discord.gg/mQbZT3x3Q
+#
+#  Цвета: &f — основной, &#00ACFF — выделение, поддерживаются любые &-коды и &#RRGGBB.
+#  Скобки: « » ‹ › ⌈ ⌋
+#  Плейсхолдеры: {prefix} и указанные в комментариях. Список строк = несколько строк в чате.
+# ═══════════════════════════════════════════════════════════════
+
+prefix: "&#00ACFF⌈Замок⌋ &f"
+
+no-permission: "{prefix}У вас нет прав на эту команду."
+player-only: "{prefix}Эта команда доступна только игрокам."
+
+help:
+  - "&#00ACFF⌈ &fMirageHWCastle &#00ACFF⌋ &fкоманды:"
+  - "&#00ACFF/hwcastle bind [уровень|random] &f— привязать блок, на который вы смотрите"
+  - "&#00ACFF/hwcastle unbind &f— отвязать блок"
+  - "&#00ACFF/hwcastle points &f— список привязанных блоков"
+  - "&#00ACFF/hwcastle spawn [уровень|random] [число|all] &f— принудительный спавн шалкеров"
+  - "&#00ACFF/hwcastle clear &f— убрать все шалкеры"
+  - "&#00ACFF/hwcastle level list|info|create|delete|set &f— уровни шалкеров"
+  - "&#00ACFF/hwcastle loot [уровень] &f— GUI лута"
+  - "&#00ACFF/hwcastle event start [секунды]|stop|status &f— ивент «Изумрудная волна»"
+  - "&#00ACFF/hwcastle paste [мир] [y] &f— вставить замок из схематики"
+  - "&#00ACFF/hwcastle reload &f— перезагрузить config.yml и lang.yml"
+  - "&#00ACFF/hwcastle about &f— о плагине"
+
+reload:
+  ok: "{prefix}Конфигурация и сообщения перезагружены."
+  error: "{prefix}Ошибка перезагрузки: &#00ACFF{error}"
+
+clear:
+  done: "{prefix}Убрано шалкеров: &#00ACFF{count}&f."
+
+# ─── Привязка блоков ──────────────────────────────────────────
+bind:
+  no-block: "{prefix}Посмотрите на блок, который нужно привязать."
+  is-shulker: "{prefix}Нельзя привязать сам шалкер. Привяжите обычный блок (например, резной каменный кирпич)."
+  already: "{prefix}Этот блок уже привязан."
+  ok: "{prefix}Блок ‹&#00ACFF{x} {y} {z}&f› привязан. Редкость: &#00ACFF{level}&f."
+unbind:
+  not-bound: "{prefix}Этот блок не привязан."
+  ok: "{prefix}Блок отвязан."
+
+points:
+  random: "случайная"
+  header: "{prefix}Привязанных блоков: &#00ACFF{count}&f, шалкеров стоит: &#00ACFF{active}&f."
+  line: "&#00ACFF{n}. &f{world} ‹{x} {y} {z}› — &#00ACFF{level}"
+  more: "&fИ ещё &#00ACFF{count}&f..."
+
+spawn:
+  ok: "{prefix}Появилось шалкеров: &#00ACFF{count}&f."
+  none: "{prefix}Свободных привязанных блоков нет (или их чанки не загружены)."
+
+# ─── Уровни ───────────────────────────────────────────────────
+level:
+  usage:
+    - "{prefix}Использование:"
+    - "&#00ACFF/hwcastle level list &f| &#00ACFF info <id> &f| &#00ACFF delete <id>"
+    - "&#00ACFF/hwcastle level create <id> <удары> <цвет> [вес]"
+    - "&#00ACFF/hwcastle level set <id> <name|color|hits|weight|fail|min|max> <значение>"
+  unknown: "{prefix}Уровень «&#00ACFF{id}&f» не найден."
+  exists: "{prefix}Уровень «&#00ACFF{id}&f» уже существует."
+  bad-id: "{prefix}ID уровня: латиница, цифры, «_» и «-», до 24 символов."
+  bad-value: "{prefix}Некорректное значение: &#00ACFF{value}"
+  created: "{prefix}Уровень «&#00ACFF{id}&f» создан. Настройте лут: &#00ACFF/hwcastle loot {id}"
+  deleted: "{prefix}Уровень «&#00ACFF{id}&f» удалён, его шалкеры убраны."
+  cannot-delete: "{prefix}Встроенный уровень ивента удалить нельзя."
+  event-managed: "{prefix}Удары и шанс пустого изумрудного шалкера задаются в config.yml → event."
+  updated: "{prefix}Уровень «&#00ACFF{id}&f»: &#00ACFF{field} &f→ &#00ACFF{value}&f. Для уже стоящих шалкеров изменения применятся после их респавна."
+  list-header: "{prefix}Уровни шалкеров:"
+  list-line: "&#00ACFF{id} &f«{name}&f» — удары: &#00ACFF{hits}&f, вес: &#00ACFF{weight}&f, пустой: &#00ACFF{fail}%&f, лут: &#00ACFF{count}&f, цвет: &#00ACFF{color}"
+  info:
+    - "{prefix}Уровень &#00ACFF{id} &f«{name}&f»"
+    - "&fЦвет: &#00ACFF{color} &f| Удары: &#00ACFF{hits} &f| Вес: &#00ACFF{weight}"
+    - "&fШанс пустого: &#00ACFF{fail}% &f| Предметов за шалкер: &#00ACFF{min}–{max} &f(0 = без лимита) | Позиций лута: &#00ACFF{count}"
+
+# ─── Шалкеры ──────────────────────────────────────────────────
+hologram:
+  format: "‹{name}&f›\n&#00ACFF{left}&f/{max}"
+shulker:
+  hit: "&f«{name}&f» — осталось ударов: &#00ACFF{left}&f/{max}"
+  success: "{prefix}«{name}&f» сломан! Выпало предметов: &#00ACFF{items}&f."
+  fail: "{prefix}«{name}&f» оказался пустым и взорвался!"
+  explosion-hit: "{prefix}Вас задело взрывом шалкера!"
+
+# ─── Замок ────────────────────────────────────────────────────
+castle:
+  no-build: "&fВ замке нельзя строить и приватить."
+  command-blocked: "{prefix}Эта команда запрещена на территории замка."
+
+# ─── Вставка замка ────────────────────────────────────────────
+paste:
+  busy: "{prefix}Замок уже вставляется, подождите."
+  reading: "{prefix}Читаю схематику ‹&#00ACFF{file}&f›..."
+  no-file: "{prefix}Файл ‹&#00ACFF{file}&f› не найден в папке плагина."
+  no-world: "{prefix}Мир «&#00ACFF{world}&f» не найден."
+  error: "{prefix}Ошибка чтения схематики: &#00ACFF{error}"
+  started: "{prefix}Вставка замка ‹&#00ACFF{w}×{h}×{l}&f› начата с угла ‹&#00ACFF{x} {y} {z}&f›."
+  done: "{prefix}Замок вставлен. Поставлено блоков: &#00ACFF{blocks}&f. Теперь привяжите блоки под шалкеров: &#00ACFF/hwcastle bind"
+
+# ─── Ивент «Изумрудная волна» ─────────────────────────────────
+event:
+  disabled: "{prefix}Ивент отключён в config.yml."
+  already: "{prefix}Ивент уже идёт."
+  not-active: "{prefix}Сейчас ивент не идёт."
+  status-active: "{prefix}Ивент «&#2ECC71Изумрудная волна&f» идёт, осталось &#00ACFF{time}&f. Шалкеров стоит: &#00ACFF{active}&f."
+  status-idle: "{prefix}Ивент не идёт. Шалкеров стоит: &#00ACFF{active}&f."
+  start:
+    - ""
+    - "{prefix}&#2ECC71⌈ Изумрудная волна ⌋ &fначалась!"
+    - "&fВсе шалкеры в замке ‹&#00ACFF{x} {z}&f› стали &#2ECC71изумрудными&f и содержат больше ценного лута."
+    - "&fКаждый нужно ломать &#00ACFF{hits}&f раз, но не в каждом есть награда — пустой взрывается!"
+    - "&fДлительность: &#00ACFF{time}"
+    - ""
+  warn: "{prefix}До конца «&#2ECC71Изумрудной волны&f» осталось &#00ACFF{time}&f."
+  end: "{prefix}«&#2ECC71Изумрудная волна&f» закончилась. Изумрудные шалкеры исчезли."
+  stopped: "{prefix}«&#2ECC71Изумрудная волна&f» остановлена администратором."
+  bossbar: "&#2ECC71Изумрудная волна &f‹&#00ACFF{time}&f›"
+  title:
+    title: "&#2ECC71Изумрудная волна"
+    subtitle: "&fШалкеры в замке ‹&#00ACFF{x} {z}&f› стали изумрудными!"
+
+# ─── GUI лута ─────────────────────────────────────────────────
+gui:
+  back: "&#00ACFF« Назад"
+  saved: "{prefix}Лут уровня «{name}&f» сохранён. Позиций: &#00ACFF{count}&f."
+  chance-line: "&fШанс: &#00ACFF{chance}%"
+  type-normal: "обычный"
+  type-event: "ивентовый"
+  selector:
+    title: "&fЛут шалкеров"
+    name: "{name}"
+    lore:
+      - ""
+      - "&fТип: &#00ACFF{type}"
+      - "&fУдары: &#00ACFF{hits}"
+      - "&fВес появления: &#00ACFF{weight}"
+      - "&fШанс пустого: &#00ACFF{fail}%"
+      - "&fПредметов за шалкер: &#00ACFF{min}–{max}"
+      - "&fПозиций лута: &#00ACFF{count}"
+      - ""
+      - "&#00ACFF» ЛКМ &f— редактировать лут"
+  editor:
+    title: "&fЛут: {name}"
+    info-name: "&#00ACFF‹ Как редактировать ›"
+    help:
+      - "&fПоложите предмет в верхние слоты —"
+      - "&fон станет лутом этого уровня."
+      - "&fЗаберите предмет — он уберётся из лута."
+      - ""
+      - "&#00ACFFShift+ЛКМ &fпо предмету: шанс &#00ACFF+5%"
+      - "&#00ACFFShift+ПКМ &fпо предмету: шанс &#00ACFF−5%"
+      - ""
+      - "&fЛут сохраняется при закрытии окна."

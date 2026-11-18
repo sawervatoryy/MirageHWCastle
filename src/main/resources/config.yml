@@ -1,0 +1,164 @@
+# ═══════════════════════════════════════════════════════════════
+#  MirageHWCastle v0.1 Pre-Release — config.yml
+#  MirageStudio | Автор: sawervatoryy | https://discord.gg/mQbZT3x3Q
+#
+#  Все сообщения игрокам лежат в lang.yml.
+#  Уровни шалкеров и лут — levels.yml (правятся командами и GUI).
+#  Привязанные блоки — points.yml (правятся /hwcastle bind | unbind).
+#  Применить изменения config.yml и lang.yml: /hwcastle reload
+#
+#  Звуки: ключ вида "minecraft:entity.generic.explode" (пустая строка — без звука).
+#  Частицы: имя из Bukkit Particle (EXPLOSION, CRIT, HAPPY_VILLAGER, END_ROD...).
+#  Частицы, требующие дополнительных данных (DUST и т.п.), не поддерживаются.
+# ═══════════════════════════════════════════════════════════════
+
+# ─── Замок ────────────────────────────────────────────────────
+castle:
+  world: world            # мир замка
+  center-x: 1000          # центр замка (по умолчанию 1000;1000)
+  center-z: 1000
+  radius: 70              # половина стороны квадратной зоны замка, в блоках
+  min-y: -64
+  max-y: 320
+  protection:
+    deny-build: true      # запретить строить/ломать/лить жидкости в зоне замка
+    force-pvp: true       # PvP в замке всегда включён (возвращает урон, отменённый другими плагинами)
+    # Команды, запрещённые в замке (защита от привата). Права обхода: miragehwcastle.bypass
+    blocked-commands:
+      - /rg
+      - /region
+      - /claim
+      - /priv
+      - /privat
+      - /wg
+  schematic:
+    file: zamok.schem     # файл схематики в папке плагина (Sponge .schem v2/v3)
+    paste-y: 64           # высота нижнего слоя по умолчанию
+    ignore-air: true      # не вставлять воздух (не вычищать территорию)
+    blocks-per-tick: 4000 # сколько блоков ставить за тик (меньше — мягче для TPS)
+
+# ─── Появление шалкеров ───────────────────────────────────────
+spawn:
+  enabled: true
+  min-interval-seconds: 60   # новый цикл спавна через случайное время между min и max
+  max-interval-seconds: 90
+  per-cycle: 3               # сколько шалкеров появляется за цикл (0 — сразу на все свободные точки)
+  initial-fill: true         # после старта сервера заполнить все точки
+  spawn-on-bind: true        # сразу ставить шалкер при /hwcastle bind
+  bind-reach: 8              # дальность взгляда для bind/unbind
+
+# ─── Удары по шалкеру ─────────────────────────────────────────
+hits:
+  mode: CLICK                # CLICK — удар = ЛКМ по блоку, BREAK — удар = попытка сломать блок
+  cooldown-ms: 350           # минимальная пауза между ударами одного игрока
+  hit-fx:
+    sound: "minecraft:block.shulker_box.close"
+    volume: 1.0
+    pitch: 1.2
+    particle: CRIT
+    count: 8
+    spread: 0.4
+  break-fx:
+    sound: "minecraft:entity.player.levelup"
+    volume: 1.0
+    pitch: 1.0
+    particle: HAPPY_VILLAGER
+    count: 20
+    spread: 0.5
+  spawn-fx:
+    sound: "minecraft:block.shulker_box.open"
+    volume: 0.8
+    pitch: 1.0
+    particle: END_ROD
+    count: 10
+    spread: 0.4
+
+# Голограмма над шалкером (формат — lang.yml → hologram.format)
+hologram:
+  enabled: true
+  y-offset: 0.4
+
+# Взрыв пустого обычного шалкера (шанс пустого задаётся в уровне: /hwcastle level set <id> fail <%>)
+fail-explosion:
+  radius: 3.0
+  damage: 4.0
+  fx:
+    sound: "minecraft:entity.generic.explode"
+    volume: 1.0
+    pitch: 1.0
+    particle: EXPLOSION
+    count: 1
+    spread: 0.0
+
+# ─── Лут ──────────────────────────────────────────────────────
+loot:
+  default-chance: 50          # шанс нового предмета, положенного в GUI (1–100)
+
+# ─── Ивент «Изумрудная волна» ─────────────────────────────────
+event:
+  enabled: true
+  duration-seconds: 900       # длительность ивента
+  hits-to-break: 16           # сколько ударов нужно по изумрудному шалкеру
+  fail-chance: 40             # шанс (%), что шалкер пуст и взорвётся
+  loot-multiplier: 2.0        # множитель количества предметов (лут уровня emerald редактируется в GUI)
+  spawn-interval-seconds: 15  # как часто во время ивента пополняются шалкеры
+  fill-all-points: true       # при старте заполнить изумрудными шалкерами ВСЕ точки
+
+  # Взрыв пустого изумрудного шалкера: урон всем в радиусе
+  explosion:
+    radius: 5.0
+    damage: 8.0
+    fx:
+      sound: "minecraft:entity.generic.explode"
+      volume: 1.2
+      pitch: 0.9
+      particle: EXPLOSION
+      count: 2
+      spread: 0.3
+
+  bossbar:
+    enabled: true
+    color: GREEN              # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+    style: PROGRESS           # PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20
+
+  title:                      # тексты — lang.yml → event.title
+    enabled: true
+    fade-in: 10               # в тиках
+    stay: 70
+    fade-out: 20
+
+  warn-at-seconds: [300, 60, 30, 10]   # предупреждения о скором конце
+
+  start-fx:
+    sound: "minecraft:ui.toast.challenge_complete"
+    volume: 1.0
+    pitch: 1.0
+  end-fx:
+    sound: "minecraft:entity.ender_dragon.growl"
+    volume: 0.6
+    pitch: 1.2
+  hit-fx:
+    sound: "minecraft:block.amethyst_block.hit"
+    volume: 1.0
+    pitch: 1.0
+    particle: HAPPY_VILLAGER
+    count: 6
+    spread: 0.4
+  break-fx:
+    sound: "minecraft:entity.experience_orb.pickup"
+    volume: 1.0
+    pitch: 0.8
+    particle: HAPPY_VILLAGER
+    count: 40
+    spread: 0.7
+
+  # Автозапуск по расписанию
+  schedule:
+    enabled: false
+    timezone: Europe/Moscow
+    times: ["19:00", "22:00"]  # формат HH:mm
+    days: []                   # пусто — каждый день; иначе MONDAY, FRIDAY, ...
+
+  # Команды от имени консоли. Плейсхолдеры: {x} {z}
+  commands-on-start: []
+  commands-on-end: []

@@ -1,0 +1,26 @@
+# MirageHWCastle v${project.version}
+# MirageStudio | Автор: sawervatoryy | https://discord.gg/mQbZT3x3Q
+name: MirageHWCastle
+version: '${project.version}'
+main: ru.miragestudio.hwcastle.MirageHWCastle
+api-version: '1.21'
+description: Замок с шалкерами и ивент «Изумрудная волна» (как «Золотая лихорадка» на HolyWorld)
+authors: [sawervatoryy]
+website: https://discord.gg/mQbZT3x3Q
+# Внешних библиотек нет. Если появятся — подключай через секцию libraries (Paper сам их скачает), без shade:
+# libraries:
+#   - group:artifact:version
+
+commands:
+  hwcastle:
+    description: Управление замком, шалкерами и ивентом
+    usage: /hwcastle help
+    aliases: [hwc, castle]
+
+permissions:
+  miragehwcastle.admin:
+    description: Доступ ко всем командам /hwcastle
+    default: op
+  miragehwcastle.bypass:
+    description: Обход защиты замка (строить, ломать, команды)
+    default: op
